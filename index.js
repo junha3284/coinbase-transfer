@@ -67,34 +67,45 @@ client.getCurrentUser(function(err, user) {
     client.getAccount(config.account_id, function(err, account) {
         processError('Get Account', err);
 
-        // account.getAddresses(null, function(err, addr) {
-        //     processError('Get All Addresses', err);
-        //     console.log("All addresses for account " + account.name + ": ");
-        //     addr.forEach(function(val, index) {
-        //         console.log("  - " +  val);
-        //     })
-        // });
-        
-        account.getAddress(config.ethermine_addr_id, function(err, addr) {
-            processError('Get Address', err);
-            
-            addr.getTransactions(null, function(err, txnList) {
-                processError('Get Transactions', err);
-                var amount = processTransactions(txnList);
+        // Loop through all addresses returned by Coinbase API to find the address ID (UUID)
+        // which is used to look up transactions sent to that address.
+        account.getAddresses(null, function(err, addr) {
+            processError('Get All Addresses', err);
+            console.log("All addresses for account " + account.name + ": " + addr);
 
-                if (amount > 0) {
-                    const opts = {
-                        'to': config.to_address,
-                        'amount': amount.toFixed(8), // Coinbase only accept 8 decimal places amount
-                        'currency': 'ETH'
-                    };
-                    console.log('Sending to ' + opts.to + ' with ' + opts.currency + ' ' + opts.amount + ' ...');
-                    account.sendMoney(opts, function(err, txn) {
-                        processError('Create Send Money Transaction', err);
-                        console.log('\n\nTransaction created: \n' + txn);
-                    });
+            var ethermine_addr_id = '';
+            addr.forEach(function(val, index) {
+                if (ethermine_addr_id == '' && val.address === config.ethermine_addr) {
+                    ethermine_addr_id = val.id;
                 }
+            })
+            if (ethermine_addr_id == '') {
+                processError('The given ETH address is not found in Coinbase. ');
+            }
+
+            account.getAddress(ethermine_addr_id, function(err, addr) {
+                processError('Get Address', err);
+                
+                addr.getTransactions(null, function(err, txnList) {
+                    processError('Get Transactions', err);
+                    var amount = processTransactions(txnList);
+
+                    if (amount > 0) {
+                        const opts = {
+                            'to': config.to_address,
+                            'amount': amount.toFixed(8), // Coinbase only accept 8 decimal places amount
+                            'currency': 'ETH'
+                        };
+                        console.log('Sending to ' + opts.to + ' with ' + opts.currency + ' ' + opts.amount + ' ...');
+                        account.sendMoney(opts, function(err, txn) {
+                            processError('Create Send Money Transaction', err);
+                            console.log('\n\nTransaction created: \n' + txn);
+                        });
+                    }
+                });
             });
+
         });
+
     });
 });
