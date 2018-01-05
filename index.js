@@ -19,7 +19,7 @@ const processError = function(scope, err) {
 
 
 // Find if received a transaction in 24 hours. 
-// If yes, half of the amount should be sent to my friend.
+// If yes, the amount * percentage should be sent to my friend.
 const processTransactions = function(txnList) {
     if (txnList.length != 0) {
         if ( !(txnList instanceof Array) && !(txnList[0] instanceof Transaction) ) {
@@ -46,7 +46,7 @@ const processTransactions = function(txnList) {
             applicableAmountList.forEach(function(amountObj, index) {
                 totalAmount += parseFloat(amountObj.amount);
             });
-            return totalAmount / 2.0;
+            return totalAmount / percentage;
         }
 
 
@@ -54,6 +54,15 @@ const processTransactions = function(txnList) {
         console.log('No transactions in the wallet. Program exits...');
         return -1;
     }
+}
+
+
+// Percentage designates how much should be sent to my friend on a regular basis.
+var percentage;
+try {
+    percentage = parseFloat(config.percentage);
+} catch(e) {
+    processError('Parsing percentage value', e);
 }
 
 
@@ -96,7 +105,8 @@ client.getCurrentUser(function(err, user) {
                             'amount': amount.toFixed(8), // Coinbase only accept 8 decimal places amount
                             'currency': 'ETH'
                         };
-                        console.log('Sending to ' + opts.to + ' with ' + opts.currency + ' ' + opts.amount + ' ...');
+                        console.log('Sending to ' + opts.to + ' with ' + opts.currency + ' ' + opts.amount + 
+                                    '(' + (percentage * 100).toFixed(2) + '%) ...');
                         account.sendMoney(opts, function(err, txn) {
                             processError('Create Send Money Transaction', err);
                             console.log('\n\nTransaction created: \n' + txn);
