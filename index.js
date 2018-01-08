@@ -80,7 +80,7 @@ client.getCurrentUser(function(err, user) {
         // which is used to look up transactions sent to that address.
         account.getAddresses(null, function(err, addr) {
             processError('Get All Addresses', err);
-            console.log("All addresses for account " + account.name + ": " + addr);
+            // console.log("All addresses for account " + account.name + ": " + addr);
 
             var ethermine_addr_id = '';
             addr.forEach(function(val, index) {
