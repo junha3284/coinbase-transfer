@@ -12,4 +12,5 @@ The script runs everyday on my local machine and check Coinbase transactions to 
 
 ## How to use
 
-Run ```npm start``` which indeed it is running ```node index.js``` behind the scene.
+1. Create a file named ```config.js``` by copying all the contents in ```config.sample.js```. Replace the config settings in ```config.js``` with yours. Instructions and meanings for each config setting are available inside ```config.sample.js```. 
+2. Run ```npm start``` which indeed it is running ```node index.js``` behind the scene.
