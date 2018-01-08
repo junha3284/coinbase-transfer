@@ -106,7 +106,7 @@ client.getCurrentUser(function(err, user) {
                             'currency': 'ETH'
                         };
                         console.log('Sending to ' + opts.to + ' with ' + opts.currency + ' ' + opts.amount + 
-                                    '(' + (percentage * 100).toFixed(2) + '%) ...');
+                                    ' (' + (percentage * 100).toFixed(1) + '%) ...');
                         account.sendMoney(opts, function(err, txn) {
                             processError('Create Send Money Transaction', err);
                             console.log('\n\nTransaction created: \n' + txn);
