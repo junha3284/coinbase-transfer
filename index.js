@@ -46,7 +46,7 @@ const processTransactions = function(txnList) {
             applicableAmountList.forEach(function(amountObj, index) {
                 totalAmount += parseFloat(amountObj.amount);
             });
-            return totalAmount / percentage;
+            return totalAmount * percentage;
         }
 
 
