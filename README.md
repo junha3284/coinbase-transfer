@@ -1,8 +1,8 @@
 # coinbase-transfer
-This utility helps to transfer balance from my Coinbase account to my friend's on a regular basis.
+This utility helps to transfer balance from one [Coinbase](https://www.coinbase.com/) account to another on a regular basis.
 
 
-## Overview
+## Motivation
 
 My friend and I were together to build a mining rig to mine Ethereum in 2017. We put up half of the money each person so the return should be distributed evenly as well!
 
@@ -13,4 +13,4 @@ The script runs everyday on my local machine and check Coinbase transactions to 
 ## How to use
 
 1. Create a file named ```config.js``` by copying all the contents in ```config.sample.js```. Replace the config settings in ```config.js``` with yours. Instructions and meanings for each config setting are available inside ```config.sample.js```. 
-2. Run ```npm start``` which indeed it is running ```node index.js``` behind the scene.
+2. Run ```npm start``` to trigger ```node index.js``` behind the scene.
