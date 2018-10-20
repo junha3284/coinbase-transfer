@@ -1,10 +1,10 @@
-# coinbase-transfer
-This utility helps to transfer balance from one [Coinbase](https://www.coinbase.com/) account to another on a regular basis.
+# Coinbase-Transfer
+Coinbase-Transfer transfers balance from one [Coinbase](https://www.coinbase.com/) account to another on a regular basis.
 
 
 ## Motivation
 
-My friend and I were together to build a mining rig to mine Ethereum in 2017. We put up half of the money each person so the return should be distributed evenly as well!
+My friend and I were together to build a mining rig for Ethereum in 2017. We put up half of the money each person so the return should be distributed evenly as well!
 
 At the time we were mining, we use the same program, the same pool and the same wallet. How can we distribute mined coins? This is the reason I am writing this script. 
 
